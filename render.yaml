@@ -8,7 +8,7 @@ services:
     # Migrations need DATABASE_URL; keep them in preDeploy (after build, before start) per Render docs.
     buildCommand: corepack enable && pnpm install && pnpm --filter @spirit-talker/shared build && pnpm --filter api run build
     preDeployCommand: corepack enable && pnpm --filter api exec prisma migrate deploy
-    startCommand: node apps/api/dist/main.js
+    startCommand: node apps/api/dist/src/main.js
     envVars:
       - key: NODE_VERSION
         value: "22"
