@@ -1,0 +1,16 @@
+{
+  "name": "spirit-talker",
+  "private": true,
+  "scripts": {
+    "prepare": "pnpm --filter @spirit-talker/shared build",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api start:dev",
+    "build": "pnpm -r run build",
+    "lint:web": "pnpm --filter web exec eslint .",
+    "lint:api": "pnpm --filter api run lint"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": ["@nestjs/core", "prisma", "@prisma/engines"]
+  }
+}

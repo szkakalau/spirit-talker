@@ -1,0 +1,53 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Device {
+  id            String        @id @default(cuid())
+  deviceId      String        @unique
+  createdAt     DateTime      @default(now())
+  orders        Order[]
+  entitlement   Entitlement?
+}
+
+model Order {
+  id                      String    @id @default(cuid())
+  deviceId                String
+  device                  Device    @relation(fields: [deviceId], references: [deviceId])
+  tier                    String
+  channel                 String
+  status                  String    @default("PENDING")
+  amountCents             Int
+  currency                String    @default("usd")
+  prepayParams            Json?
+  stripeCheckoutSessionId String?   @unique
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+  audits                  PaymentAudit[]
+}
+
+model Entitlement {
+  id         String   @id @default(cuid())
+  deviceId   String   @unique
+  device     Device   @relation(fields: [deviceId], references: [deviceId])
+  planTier   String
+  validUntil DateTime
+  updatedAt  DateTime @updatedAt
+}
+
+model PaymentAudit {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  channel   String
+  rawBody   String   @db.Text
+  headers   Json?
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
