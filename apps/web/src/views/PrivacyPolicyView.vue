@@ -14,8 +14,8 @@ const effective = 'May 12, 2026';
     <h2>Summary</h2>
     <p>
       This app is built for entertainment. We use a random device identifier stored in your browser to check Pro entitlements against our servers. EVP
-      recordings stay on your device unless you export them yourself. Payments go through Stripe. Analytics may log product usage events; in many builds
-      this is limited to development logging unless you wire a third-party analytics provider.
+      recordings stay on your device unless you export them yourself. Payments go through Stripe. Optional usage analytics (GA4 when configured) load only after
+      cookie consent; otherwise events stay local to the browser except for development console logging.
     </p>
 
     <h2>Information we collect</h2>
@@ -39,8 +39,9 @@ const effective = 'May 12, 2026';
       </li>
       <li>
         <strong class="text-zinc-300">Usage analytics.</strong> The client emits named events (for example screen actions and checkout outcomes). In development,
-        events may appear in the browser console. In production, your deployment may attach Google Analytics 4, Mixpanel, or similar via our analytics hook—only
-        if you configure it. If attached, those providers process data under their own policies.
+        events may appear in the browser console. In production, if you set <code class="text-zinc-400">VITE_GA_MEASUREMENT_ID</code>, we may load Google Analytics 4
+        after you accept the in-app cookie banner; until then, Consent Mode keeps measurement storage denied and the GA script is not fetched. Other vendors (for example
+        Mixpanel) can subscribe to the same <code class="text-zinc-400">track</code> hook in your fork. Third parties process data under their own policies.
       </li>
       <li>
         <strong class="text-zinc-300">Technical data.</strong> Like most hosted APIs, ours may receive IP addresses and standard HTTP logs at the infrastructure
@@ -63,8 +64,9 @@ const effective = 'May 12, 2026';
         apply to payment transactions and fraud signals Stripe collects.
       </li>
       <li>
-        <strong class="text-zinc-300">Optional analytics (e.g. GA4).</strong> If enabled, the analytics vendor receives events you map from our <code class="text-zinc-400">track</code> helper.
-        Disable or configure those tags in your deployment if you do not want them.
+        <strong class="text-zinc-300">Optional analytics (e.g. GA4).</strong> If you opt in via the cookie banner, the GA4 tag receives events mapped from our
+        <code class="text-zinc-400">track</code> helper (including custom event names such as EV001–EV012) and standard page views on navigation. If you decline, those
+        tags are not loaded for that browser. You can change your mind by clearing site data for this origin.
       </li>
     </ul>
 
@@ -77,7 +79,7 @@ const effective = 'May 12, 2026';
 
     <h2>Your choices and rights</h2>
     <ul>
-      <li>Clearing site data removes the local deviceId (you may need to restore purchases or contact support to re-link a subscription).</li>
+      <li>Clearing site data removes the local deviceId (you may need to restore purchases or contact support to re-link a subscription) and resets the analytics consent choice so the cookie banner can appear again.</li>
       <li>Where applicable law grants access, correction, portability, or erasure, you may request help with server-side records associated with your deviceId.</li>
       <li>Stripe provides self-service invoices and payment history in its customer flows; cancellation and card updates are typically handled there.</li>
     </ul>

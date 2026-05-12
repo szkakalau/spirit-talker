@@ -6,6 +6,8 @@ interface ImportMetaEnv {
   readonly VITE_SITE_ORIGIN?: string;
   /** Support inbox for billing / privacy requests (optional in dev) */
   readonly VITE_SUPPORT_EMAIL?: string;
+  /** Google Analytics 4 Measurement ID (G-XXXXXXXX). When set, production shows consent banner before loading gtag. */
+  readonly VITE_GA_MEASUREMENT_ID?: string;
 }
 
 interface ImportMeta {

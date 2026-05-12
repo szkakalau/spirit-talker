@@ -38,6 +38,12 @@ const apiProxy = {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, webRoot, '');
   const siteOrigin = (env.VITE_SITE_ORIGIN ?? '').trim();
+  const apiBaseUrl = (env.VITE_API_BASE_URL ?? process.env.VITE_API_BASE_URL ?? '').trim();
+  if (mode === 'production' && process.env.VERCEL === '1' && !apiBaseUrl) {
+    console.warn(
+      '\n[spirit-talker] VITE_API_BASE_URL is unset on Vercel. Set it to your API origin (e.g. https://….onrender.com, no trailing slash) and redeploy, or /api will resolve to index.html.\n',
+    );
+  }
 
   return {
     plugins: [vue(), tailwindcss(), seoOriginPlugin(siteOrigin)],

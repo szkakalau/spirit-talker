@@ -17,6 +17,18 @@ function htmlInsteadOfJsonHint(): string {
   );
 }
 
+/** Browsers report CORS, DNS, TLS, and network drops as TypeError / "Failed to fetch". */
+function wrapFetchFailure(url: string, err: unknown): never {
+  if (err instanceof TypeError) {
+    throw new Error(
+      `Failed to reach the API (${url}). Often: server down or cold-start (wait ~60s on Render free), ` +
+        `CORS (set CORS_ORIGIN on the API to include this site’s origin), HTTPS page calling HTTP API (mixed content), ` +
+        `wrong VITE_API_BASE_URL, or an extension blocking requests. (${err.message})`,
+    );
+  }
+  throw err;
+}
+
 async function parseJson<T>(res: Response): Promise<T> {
   const text = await res.text();
   if (!res.ok) {
@@ -34,15 +46,27 @@ async function parseJson<T>(res: Response): Promise<T> {
 }
 
 export async function apiGet<T>(path: string): Promise<T> {
-  const res = await fetch(`${apiBase()}${path.startsWith('/') ? path : `/${path}`}`);
+  const url = `${apiBase()}${path.startsWith('/') ? path : `/${path}`}`;
+  let res: Response;
+  try {
+    res = await fetch(url);
+  } catch (e) {
+    wrapFetchFailure(url, e);
+  }
   return parseJson<T>(res);
 }
 
 export async function apiPost<T>(path: string, body?: unknown): Promise<T> {
-  const res = await fetch(`${apiBase()}${path.startsWith('/') ? path : `/${path}`}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
+  const url = `${apiBase()}${path.startsWith('/') ? path : `/${path}`}`;
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+  } catch (e) {
+    wrapFetchFailure(url, e);
+  }
   return parseJson<T>(res);
 }
