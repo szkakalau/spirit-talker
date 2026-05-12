@@ -84,6 +84,40 @@ function closePay() {
       </button>
     </header>
 
+    <section
+      class="mb-8 grid gap-6 rounded-2xl border border-zinc-800/80 bg-gradient-to-b from-zinc-900/55 to-zinc-950/25 p-5 sm:mb-10 sm:grid-cols-2 sm:gap-8 sm:p-6"
+      aria-labelledby="home-value-heading"
+    >
+      <div>
+        <h2 id="home-value-heading" class="text-xs font-semibold uppercase tracking-wide text-violet-300/90">Built for these sessions</h2>
+        <ul class="mt-3 list-inside list-disc space-y-2.5 text-sm leading-relaxed text-zinc-400 marker:text-violet-500/70">
+          <li>Quiet or low-light setups where you want meter, prompts, and recording on one device—no juggling separate installs.</li>
+          <li>Long EVP-style captures with waveform context, markers, and export when you review later.</li>
+          <li>Atmospheric “field” moments paired with spirit words—manual taps or spikes from the EMF-style view when your device exposes useful sensors.</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-xs font-semibold uppercase tracking-wide text-violet-300/90">How this differs</h2>
+        <ul class="mt-3 list-inside list-disc space-y-2.5 text-sm leading-relaxed text-zinc-400 marker:text-violet-500/70">
+          <li>
+            <span class="-ml-1 font-medium text-zinc-200">Runs in the browser</span>
+            — open and go; add to home screen as a PWA where supported. No proprietary dongle or siloed hardware companion app.
+          </li>
+          <li>
+            <span class="-ml-1 font-medium text-zinc-200">Sensor-mapped, not magic numbers</span>
+            — the EMF-style layer reflects what the device can sense, tuned for mood and experimentation rather than hidden “black box” scoring.
+          </li>
+          <li>
+            <span class="-ml-1 font-medium text-zinc-200">Honest about limits</span>
+            — not sold as a lab-calibrated instrument; combine the three tools (meter, words, EVP) for creative, entertainment-forward sessions.
+          </li>
+        </ul>
+        <p class="mt-4 text-xs leading-relaxed text-zinc-500">
+          Recording a quick tour? The three cards below line up with distinct full-screen flows—EMF meter, spirit words, then EVP—each easy to frame for a still or short clip.
+        </p>
+      </div>
+    </section>
+
     <main class="grid flex-1 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
       <button
         type="button"
