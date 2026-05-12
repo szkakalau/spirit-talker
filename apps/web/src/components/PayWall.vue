@@ -2,9 +2,10 @@
 import { PlanTier, PLAN_PRICES_USD_CENTS, formatUsd } from '@spirit-talker/shared';
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useMembershipStore } from '../stores/membership';
+import { showMockCheckout } from '../lib/checkoutEnv';
 import { track } from '../lib/analytics';
 import { getSupportEmail, supportMailto } from '../lib/siteContact';
+import { useMembershipStore } from '../stores/membership';
 
 const emit = defineEmits<{ close: [] }>();
 
@@ -36,8 +37,9 @@ async function pay() {
       window.location.href = created.checkoutUrl;
       return;
     }
-    hint.value =
-      'Stripe is not configured on the server. Use “Complete mock payment” for local testing (no STRIPE_SECRET_KEY).';
+    hint.value = showMockCheckout
+      ? 'Stripe is not configured on the server. Use “Complete mock payment” for local testing (no STRIPE_SECRET_KEY).'
+      : 'Checkout is not available because payment is not configured on the server. Please try again later or contact support.';
   } catch (e) {
     track('EV010', { reason: e instanceof Error ? e.message : 'unknown' });
     hint.value = e instanceof Error ? e.message : 'Could not start checkout';
@@ -101,17 +103,17 @@ async function mockPay() {
 
       <div class="mb-4 grid grid-cols-3 gap-2">
         <button
-          v-for="t in tiers"
-          :key="t.id"
+          v-for="opt in tiers"
+          :key="opt.id"
           type="button"
           class="flex min-h-[52px] flex-col items-center justify-center rounded-xl border px-2 py-2 text-center text-sm transition active:scale-[0.98]"
           :class="
-            tier === t.id ? 'border-violet-500 bg-violet-950/50 text-violet-100' : 'border-zinc-800 bg-zinc-900 text-zinc-300'
+            tier === opt.id ? 'border-violet-500 bg-violet-950/50 text-violet-100' : 'border-zinc-800 bg-zinc-900 text-zinc-300'
           "
-          @click="tier = t.id"
+          @click="tier = opt.id"
         >
-          <span class="font-medium">{{ t.label }}</span>
-          <span class="mt-0.5 text-xs tabular-nums text-zinc-500">{{ formatUsd(PLAN_PRICES_USD_CENTS[t.id]) }}</span>
+          <span class="font-medium">{{ opt.label }}</span>
+          <span class="mt-0.5 text-xs tabular-nums text-zinc-500">{{ formatUsd(PLAN_PRICES_USD_CENTS[opt.id]) }}</span>
         </button>
       </div>
 
@@ -129,6 +131,7 @@ async function mockPay() {
           Pay with Stripe
         </button>
         <button
+          v-if="showMockCheckout"
           type="button"
           class="min-h-[48px] rounded-xl border border-zinc-700 text-sm text-zinc-200 hover:border-zinc-500 disabled:opacity-50"
           :disabled="busy || !lastOrderId"
@@ -140,16 +143,23 @@ async function mockPay() {
 
       <p class="mt-5 text-center text-[11px] leading-relaxed text-zinc-500">
         By continuing you agree to the
-        <RouterLink to="/terms" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300">Terms &amp; Disclaimer</RouterLink>
+        <RouterLink to="/terms" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300"
+          >Terms &amp; Disclaimer</RouterLink
+        >
         and
-        <RouterLink to="/privacy" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300">Privacy Policy</RouterLink>.
+        <RouterLink to="/privacy" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300"
+          >Privacy Policy</RouterLink
+        >.
       </p>
       <p v-if="supportEmail && supportMailHref" class="mt-2 text-center text-[11px] text-zinc-500">
-        <a :href="supportMailHref" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300">Contact support</a>
+        <a :href="supportMailHref" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300"
+          >Contact support</a
+        >
         <span class="text-zinc-600"> · {{ supportEmail }}</span>
       </p>
       <p v-else class="mt-2 text-center text-[11px] text-zinc-600">
-        Receipts and subscription management: use links from Stripe after payment. Set <span class="font-mono text-zinc-500">VITE_SUPPORT_EMAIL</span> to show a support address here.
+        Receipts and subscription management: use links from Stripe after payment. Set <span class="font-mono text-zinc-500">VITE_SUPPORT_EMAIL</span> to show a
+        support address here.
       </p>
     </div>
   </div>

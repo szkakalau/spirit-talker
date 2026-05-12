@@ -43,8 +43,7 @@ function decline() {
       >
         <p id="st-cookie-title" class="text-sm font-medium text-zinc-100">Analytics and cookies</p>
         <p id="st-cookie-desc" class="mt-2 text-xs leading-relaxed text-zinc-400">
-          We use optional measurement (for example Google Analytics 4) to understand traffic and product usage. No marketing tags load unless you accept.
-          See our
+          We use optional measurement (for example Google Analytics 4) to understand traffic and product usage. No marketing tags load unless you accept. See our
           <RouterLink to="/privacy" class="text-violet-400 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300">Privacy Policy</RouterLink>
           for details.
         </p>

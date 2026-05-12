@@ -2,8 +2,8 @@
 import { computed, onMounted, watch } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import PayWall from '../components/PayWall.vue';
-import { useMembershipStore } from '../stores/membership';
 import { track } from '../lib/analytics';
+import { useMembershipStore } from '../stores/membership';
 
 const router = useRouter();
 const route = useRoute();
@@ -60,8 +60,8 @@ function closePay() {
         <p class="text-sm text-violet-300/90">Spirit Talker · Web</p>
         <h1 class="mt-1 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Spirit Talker Pro</h1>
         <p class="mt-3 max-w-xl text-sm leading-relaxed text-zinc-400">
-          Browser-based EMF-style meter, spirit word prompts, and EVP recording. Readings are mapped from device sensors for
-          atmosphere only—not a calibrated instrument.
+          Browser-based EMF-style meter, spirit word prompts, and EVP recording. Readings are mapped from device sensors for atmosphere only—not a calibrated
+          instrument.
         </p>
         <div class="mt-4 flex flex-wrap items-center gap-2 text-xs">
           <span class="rounded-full border border-zinc-800 bg-zinc-900/80 px-3 py-2 text-zinc-300">{{ membership.statusLabel }}</span>
@@ -118,7 +118,6 @@ function closePay() {
       <RouterLink to="/terms" class="text-zinc-500 underline decoration-zinc-700 underline-offset-2 hover:text-violet-400">Terms &amp; Disclaimer</RouterLink>
     </footer>
 
-    <!-- Mobile sticky CTA -->
     <div
       class="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-800/80 bg-zinc-950/95 p-3 backdrop-blur-md sm:hidden"
       style="padding-bottom: max(0.75rem, env(safe-area-inset-bottom))"

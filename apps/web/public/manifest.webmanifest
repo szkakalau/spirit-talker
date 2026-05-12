@@ -1,0 +1,20 @@
+{
+  "name": "Spirit Talker Pro",
+  "short_name": "Spirit Talker",
+  "description": "Browser EMF-style meter, spirit word prompts, and EVP recording for creative use.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

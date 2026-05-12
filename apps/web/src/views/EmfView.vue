@@ -183,9 +183,7 @@ function forceSim() {
       </button>
       <div class="min-w-0 flex-1">
         <h1 class="text-xl font-semibold text-white">EMF meter</h1>
-        <p class="text-xs text-zinc-500">
-          0–1000 display scale · ≥5 Hz · Source: {{ sourceLabel }}
-        </p>
+        <p class="text-xs text-zinc-500">0–1000 display scale · ≥5 Hz · Source: {{ sourceLabel }}</p>
       </div>
     </header>
 

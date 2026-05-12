@@ -1,3 +1,8 @@
+/**
+ * MVP: entitlements are keyed by deviceId only (no accounts). Works for a lean launch but
+ * expect support load from device changes, cache clears, and shared devices. Medium-term:
+ * optional email / Apple Sign-In to attach purchases to a user id and restore across devices.
+ */
 import { PlanTier } from '@spirit-talker/shared';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
