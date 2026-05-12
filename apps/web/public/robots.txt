@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# After you deploy to a stable origin, add a sitemap line (absolute URL required), for example:
+# Sitemap: https://your-domain.com/sitemap.xml
