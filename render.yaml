@@ -5,7 +5,9 @@ services:
     runtime: node
     plan: free
     rootDir: .
-    buildCommand: corepack enable && pnpm install && pnpm --filter @spirit-talker/shared build && pnpm --filter api exec prisma migrate deploy && pnpm --filter api run build
+    # Migrations need DATABASE_URL; keep them in preDeploy (after build, before start) per Render docs.
+    buildCommand: corepack enable && pnpm install && pnpm --filter @spirit-talker/shared build && pnpm --filter api run build
+    preDeployCommand: corepack enable && pnpm --filter api exec prisma migrate deploy
     startCommand: node apps/api/dist/main.js
     envVars:
       - key: NODE_VERSION

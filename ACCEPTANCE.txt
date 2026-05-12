@@ -7,8 +7,10 @@ Payments
 - Local dev without Stripe keys: mock complete via Pay modal
 
 Deploy
-- Web: Vercel — set VITE_API_BASE_URL to Render API URL; SPA rewrite via apps/web/vercel.json
-- API: Render — see render.yaml; DATABASE_URL (PostgreSQL), WEB_APP_URL, CORS_ORIGIN, Stripe vars
+- Web: Vercel — Root Directory MUST be apps/web (not apps/api or repo root alone). The API is a long-running Nest app for Render, not Vercel serverless; pointing Vercel at apps/api causes nest build + FUNCTION_INVOCATION_FAILED at runtime.
+- Web env: VITE_API_BASE_URL = your Render API origin (no trailing slash). apps/web/vercel.json sets monorepo install/build from repo root.
+- API: Render — see render.yaml; set DATABASE_URL (PostgreSQL) in the web service env before a successful deploy (Blueprint sync:false: paste Internal DB URL or use “Link database”). Migrations run in preDeployCommand, not build.
+- API env: WEB_APP_URL, CORS_ORIGIN, Stripe vars as needed
 
 Mobile
 - Safe-area padding, sticky upgrade CTA on small screens, larger tap targets, responsive EMF/EVP canvases
