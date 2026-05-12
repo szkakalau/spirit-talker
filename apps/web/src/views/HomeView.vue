@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 import PayWall from '../components/PayWall.vue';
 import { useMembershipStore } from '../stores/membership';
 import { track } from '../lib/analytics';
@@ -112,7 +112,10 @@ function closePay() {
     </main>
 
     <footer class="mt-auto pt-10 text-center text-xs leading-relaxed text-zinc-600 sm:mt-10">
-      Entertainment use · Privacy policy before production launch
+      <span>Entertainment use · </span>
+      <RouterLink to="/privacy" class="text-zinc-500 underline decoration-zinc-700 underline-offset-2 hover:text-violet-400">Privacy Policy</RouterLink>
+      <span> · </span>
+      <RouterLink to="/terms" class="text-zinc-500 underline decoration-zinc-700 underline-offset-2 hover:text-violet-400">Terms &amp; Disclaimer</RouterLink>
     </footer>
 
     <!-- Mobile sticky CTA -->

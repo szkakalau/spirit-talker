@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { PlanTier, PLAN_PRICES_USD_CENTS, formatUsd } from '@spirit-talker/shared';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 import { useMembershipStore } from '../stores/membership';
 import { track } from '../lib/analytics';
+import { getSupportEmail, supportMailto } from '../lib/siteContact';
 
 const emit = defineEmits<{ close: [] }>();
 
@@ -19,6 +21,9 @@ const tiers: { id: PlanTier; label: string }[] = [
 ];
 
 const webAppUrl = typeof window !== 'undefined' ? window.location.origin : '';
+
+const supportEmail = computed(() => getSupportEmail());
+const supportMailHref = computed(() => supportMailto());
 
 async function pay() {
   busy.value = true;
@@ -132,6 +137,20 @@ async function mockPay() {
           Complete mock payment (local dev only)
         </button>
       </div>
+
+      <p class="mt-5 text-center text-[11px] leading-relaxed text-zinc-500">
+        By continuing you agree to the
+        <RouterLink to="/terms" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300">Terms &amp; Disclaimer</RouterLink>
+        and
+        <RouterLink to="/privacy" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300">Privacy Policy</RouterLink>.
+      </p>
+      <p v-if="supportEmail && supportMailHref" class="mt-2 text-center text-[11px] text-zinc-500">
+        <a :href="supportMailHref" class="text-violet-400/90 underline decoration-violet-600/40 underline-offset-2 hover:text-violet-300">Contact support</a>
+        <span class="text-zinc-600"> · {{ supportEmail }}</span>
+      </p>
+      <p v-else class="mt-2 text-center text-[11px] text-zinc-600">
+        Receipts and subscription management: use links from Stripe after payment. Set <span class="font-mono text-zinc-500">VITE_SUPPORT_EMAIL</span> to show a support address here.
+      </p>
     </div>
   </div>
 </template>

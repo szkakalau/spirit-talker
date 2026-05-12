@@ -8,5 +8,7 @@ export const router = createRouter({
     { path: '/emf', name: 'emf', component: () => import('../views/EmfView.vue') },
     { path: '/spirit', name: 'spirit', component: () => import('../views/SpiritView.vue') },
     { path: '/evp', name: 'evp', component: () => import('../views/EvpView.vue') },
+    { path: '/privacy', name: 'privacy', component: () => import('../views/PrivacyPolicyView.vue') },
+    { path: '/terms', name: 'terms', component: () => import('../views/TermsOfServiceView.vue') },
   ],
 });
