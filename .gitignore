@@ -12,3 +12,6 @@ coverage
 .idea
 .vscode
 apps/web/lighthouse-report.json
+.claude/
+.env.*
+.credentials.json
